@@ -1,90 +1,31 @@
-// using System.Collections.Generic;
-// using UnityEngine;
-
-// public class BirdManager : MonoBehaviour
-// {
-//     public List<GameObject> birds; // רשימה של כל הציפורים
-//     private int currentBirdIndex = 0;
-
-//     // public void SpawnNextBird()
-//     // {
-//     //     if (currentBirdIndex < birds.Count)
-//     //     {
-//     //         birds[currentBirdIndex].SetActive(true); // הפעיל את הציפור הנוכחית
-//     //         currentBirdIndex++;
-//     //     }
-//     //     else
-//     //     {
-//     //         Debug.Log("Game Over: No more birds left!");
-//     //     }
-//     // }
-
-// public void SpawnNextBird()
-// {
-//     if (currentBirdIndex < birds.Count)
-//     {
-//         birds[currentBirdIndex].SetActive(true); // הפעל את הציפור הנוכחית
-//         currentBirdIndex++;
-//     }
-//     else
-//     {
-//         Debug.Log("Game Over: No more birds left!");
-//     }
-// }
-
-
-//     public void ResetAllBirds()
-//     {
-//         foreach (var bird in birds)
-//         {
-//             bird.SetActive(false);
-//         }
-//         currentBirdIndex = 0;
-//         SpawnNextBird();
-//     }
-
-//     void Start()
-// {
-//     for (int i = 1; i < birds.Count; i++)
-//     {
-//         birds[i].SetActive(false); // כיבוי כל הציפורים מלבד הראשונה
-//     }
-// }
-
-// }
-
-// עובד 
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BirdManager : MonoBehaviour
 {
-    public List<GameObject> birds; // רשימה של כל הציפורים
-    private int currentBirdIndex = 0;
+    [SerializeField] GameObject birdPrefab;  // Assign in inspector
+    [SerializeField] Transform spawnPoint;   // Assign in inspector (the slingshot pivot or close to it)
+    [SerializeField] int maxBirdCount;
+    int currentBirdCount = 0;
 
     public void SpawnNextBird()
     {
-        if (currentBirdIndex < birds.Count)
+        if (currentBirdCount < maxBirdCount)
         {
-            GameObject nextBird = birds[currentBirdIndex];
-            nextBird.SetActive(true); // הפעל את הציפור הבאה
-            currentBirdIndex++;
+            Instantiate(birdPrefab, spawnPoint.position, Quaternion.identity);
+            currentBirdCount++;
         }
         else
         {
+            WaitForSeconds wait = new WaitForSeconds(.5f); // for a case when you kill the last bird and the last pig together
+            // No more birds left
+            // If no more birds and still pigs alive -> lose scene
             Debug.Log("Game Over: No more birds left!");
+            GameSceneManager.instance.GoToLoseScene();
         }
     }
 
     void Start()
     {
-        // כבה את כל הציפורים מלבד הראשונה
-        for (int i = 0; i < birds.Count; i++)
-        {
-            birds[i].SetActive(false);
-        }
-
-        // הפעל את הציפור הראשונה
         SpawnNextBird();
     }
 }
