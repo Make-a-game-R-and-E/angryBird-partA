@@ -28,7 +28,7 @@ public class BirdLauncher : MonoBehaviour
     void Start()
     {
         mainCamera = Camera.main;
-        birdManager = FindFirstObjectByType<BirdManager>(); // Available in Unity 2023.1+; otherwise use FindObjectOfType<BirdManager>()
+        birdManager = FindFirstObjectByType<BirdManager>();
     }
 
     void Update()

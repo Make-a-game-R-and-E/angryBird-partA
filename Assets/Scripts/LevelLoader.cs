@@ -10,10 +10,8 @@ public class LevelLoader : MonoBehaviour
     [Tooltip("The build index of the scene you want to load")]
     [SerializeField] int levelIndex;
 
-    /// <summary>
     /// Loads a scene by the specified name.
     /// Ensure the scene is added in the Build Settings.
-    /// </summary>
     public void LoadLevelByName()
     {
         if (!string.IsNullOrEmpty(levelName))
@@ -26,10 +24,8 @@ public class LevelLoader : MonoBehaviour
         }
     }
 
-    /// <summary>
     /// Loads a scene by the specified build index.
     /// Ensure the scene is added in the Build Settings.
-    /// </summary>
     public void LoadLevelByIndex()
     {
         // Make sure the index is valid
